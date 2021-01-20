@@ -4,7 +4,7 @@ const api = "https://myocode.cognitiveservices.azure.com/luis/prediction/v3.0/ap
 
 function getDim() {
     let x = document.getElementById('right-section');
-    return ("\n_p.createCanvas("+x.clientWidth+","+x.clientHeight+");");
+    return ("\n_p.createCanvas("+(x.clientWidth-3)+","+(x.clientHeight-3)+");");
 }
 
 function strip(html) {
@@ -79,6 +79,7 @@ var ready = (callback) => {
 ready(() => { 
     document.getElementById("start-btn").click();
 
+    
 
     const tx = document.getElementsByTagName('textarea');
     for (let i = 0; i < tx.length; i++) {
@@ -99,7 +100,7 @@ ready(() => {
     document.querySelector("#play").addEventListener("click", (e) => {
         //let txt = $('textarea#prgm-setup').val() + "~`~" + $('textarea#prgm-loop').val();
         //let txt = $('#prgm-setup').text() + "~`~" + $('#prgm-loop').text();
-        let txt = document.getElementById('prgm-setup').innerText + "~`~" + document.getElementById('prgm-loop').innerText;
+        let txt = document.getElementById('prgm-setup').value + "~`~" + document.getElementById('prgm-loop').value;
         let lines = txt.split('\n');
         
 
@@ -172,3 +173,7 @@ function openTab(evt, tabName) {
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
 } 
+
+function resizeIframe(obj) {
+    obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
+  }
