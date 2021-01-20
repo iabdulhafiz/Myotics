@@ -1,0 +1,114 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+html, body, main {
+    height:100%; 
+    font-family: Arial, Helvetica, sans-serif;
+ }
+
+.main-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height:100%;
+    max-height: 100%;
+}
+
+#left-section {
+    grid-column: 1;
+    grid-row: 1;
+    padding: 5%;
+    box-shadow: 1px 5px 15px #0000003d;
+    text-align: center;
+    display: block;
+    overflow-y: auto;
+    background-color: rgb(246, 255, 249);
+}
+
+#right-section {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+
+.textarea {
+    font-family: inherit;
+    font-size: inherit;
+    padding: 1px 6px;
+    display: block;
+    background-color: white;
+    border-radius: 3px;
+}
+
+.setup[contenteditable]:empty::before {
+    content: "Placeholder still possible";
+    color: gray;
+}
+
+.loop[contenteditable]:empty::before {
+    content: "Placeholder still possible";
+    color: gray;
+}
+
+
+ /* Style the tab */
+ .tab {
+    overflow: hidden;
+    width: auto;
+  }
+  
+  /* Style the buttons that are used to open the tab content */
+  .tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+  }
+  
+  /* Change background color of buttons on hover */
+  .tab button:hover {
+    background-color: #ddd;
+  }
+  
+  /* Create an active/current tablink class */
+  .tab button.active {
+    background-color: #ccc;
+  }
+  
+  /* Style the tab content */
+  .tabcontent {
+    display: none;
+    text-align: left;
+    padding: 40px 20px;
+  } 
+
+.scrl {
+}
+
+.tabcontent * {
+    padding: 6px 12px;
+} 
+
+
+
+
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgb(185, 185, 185); 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }

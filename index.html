@@ -1,17 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>myoLearn</title>
+    <link rel="icon" type="image/png" href="fav.png"/>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
+    <script src="sketch.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js"></script>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <title>Vanilla JavaScript App</title>
-</head>
 
-<body>
-  <main>
-    <h1>Vanilla JavaScript App</h1>
-  </main>
-</body>
+  </head>
+  <body>
+    <main>
+        <div class="main-section">
+            
+            <div id="left-section"> 
+                <!-- Title -->
+                <h1>myoLearn</h1>
+                <!-- Menu content -->
+                <div class="tab">
+                    <button class="tablinks" onclick="openTab(event, 'Start')">Home</button>
+                    <button class="tablinks" onclick="openTab(event, 'Create')">Create</button>
+                    <button class="tablinks" onclick="openTab(event, 'Learn')">Learn</button>
+                    <button class="tablinks" onclick="openTab(event, 'About')">About</button>
+                </div>
+                <!-- Tab content -->
+                
+                <div id="Create" class="tabcontent">
+                    <div class="cntrl">
+                        <button id="play">► run sketch</button>
+                        <button id="stop">◼ stop sketch</button>
+                    </div>
+                    <div class="scrl">
+                        <div class="setup">
+                            <h3>Say what the program should do as soon as it starts:</h3>
+                            <span class="textarea setup" id="prgm-setup" role="textbox" contenteditable></span>
+                        </div>
+                        <div class="loop">
+                            <h3>Say what the program should do forever:</h3>
+                            <span class="textarea loop" id="prgm-loop" role="textbox" contenteditable></span>
+                        </div>
+                    </div>
+                </div>
 
+
+
+            </div>
+            <div id="right-section">
+                <div id="container" class="example-container">
+                </div>
+            </div>
+        </div>
+
+    </main>
+  </body>
 </html>
