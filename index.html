@@ -18,33 +18,47 @@
             
             <div id="left-section"> 
                 <!-- Title -->
-                <h1>myoLearn</h1>
+                <image id="logo" src="myoLogoNew.svg" height="60px">
                 <!-- Menu content -->
                 <div class="tab">
-                    <button class="tablinks" onclick="openTab(event, 'Start')">Home</button>
+                    <button id="start-btn" class="tablinks" onclick="openTab(event, 'Start')">Start</button>
                     <button class="tablinks" onclick="openTab(event, 'Create')">Create</button>
                     <button class="tablinks" onclick="openTab(event, 'Learn')">Learn</button>
                     <button class="tablinks" onclick="openTab(event, 'About')">About</button>
                 </div>
                 <!-- Tab content -->
+                <div id="Start" class="tabcontent">
+
+                </div>
                 
                 <div id="Create" class="tabcontent">
                     <div class="cntrl">
-                        <button id="play">► run sketch</button>
-                        <button id="stop">◼ stop sketch</button>
+                        <button id="play">► Run</button>
+                        <button id="stop">◼ Stop</button>
                     </div>
                     <div class="scrl">
                         <div class="setup">
-                            <h3>Say what the program should do as soon as it starts:</h3>
-                            <span class="textarea setup" id="prgm-setup" role="textbox" contenteditable></span>
+                            <h3>When I first start ...</h3>
+                            <!--
+                            <span class="textarea setup" id="prgm-setup" role="textbox" contenteditable ></span>
+                            <span class="textarea loop" id="prgm-loop" role="textbox" contenteditable></span> -->
+                            <textarea class="textarea setup" id="prgm-setup" placeholder="Write some code..."></textarea>
                         </div>
+                        <br>
                         <div class="loop">
-                            <h3>Say what the program should do forever:</h3>
-                            <span class="textarea loop" id="prgm-loop" role="textbox" contenteditable></span>
+                            <h3>I will do this forever ...</h3>
+                            <textarea class="textarea loop" id="prgm-loop" placeholder="Write some code..."></textarea>
                         </div>
                     </div>
                 </div>
 
+                <div id="Learn" class="tabcontent">
+
+                </div>
+
+                <div id="About" class="tabcontent">
+
+                </div>
 
 
             </div>

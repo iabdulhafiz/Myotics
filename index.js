@@ -2,6 +2,18 @@
 
 const api = "https://myocode.cognitiveservices.azure.com/luis/prediction/v3.0/apps/a2f6ec48-3d5e-495e-bd73-b3d42335010e/slots/staging/predict?subscription-key=64b7b41244ff40bc8bd999c63f7bb41c&verbose=true&show-all-intents=true&log=true&query=";
 
+function getDim() {
+    let x = document.getElementById('right-section');
+    return ("\n_p.createCanvas("+x.clientWidth+","+x.clientHeight+");");
+}
+
+function strip(html) {
+    var tempDiv = document.createElement("DIV");
+    tempDiv.innerHTML = html;
+    let re = tempDiv.innerText;
+    //tempDiv.re
+    return re;
+}
 
 function processJSON(jsn) {
     return (JSON.stringify(jsn) + '\n');
@@ -65,6 +77,25 @@ var ready = (callback) => {
 }
 
 ready(() => { 
+    document.getElementById("start-btn").click();
+
+
+    const tx = document.getElementsByTagName('textarea');
+    for (let i = 0; i < tx.length; i++) {
+        tx[i].setAttribute('style', 'height:' + (tx[i].scrollHeight+50) + 'px;overflow-y:hidden;');
+        tx[i].addEventListener("input", OnInput, false);
+    }
+
+    function OnInput() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+    }
+    /*
+    document.getElementById("prgm-setup").addEventListener("input", function(e) {
+        let iT = document.getElementById("prgm-setup").innerHTML;
+        document.getElementById("prgm-setup").innerHTML = iT;
+    }, false);
+    */
     document.querySelector("#play").addEventListener("click", (e) => {
         //let txt = $('textarea#prgm-setup').val() + "~`~" + $('textarea#prgm-loop').val();
         //let txt = $('#prgm-setup').text() + "~`~" + $('#prgm-loop').text();
@@ -92,7 +123,7 @@ ready(() => {
         //axios.post(transAPI, dat, {headers: headers})
         if (bypassLUIS) {
             let setup_loop = txt.split('~`~');
-            let jsCode = "_p.setup = function() {" + setup_loop[0] + "}; _p.draw = function() {" + setup_loop[1] + "};"; 
+            let jsCode = "_p.setup = function() {" + getDim() + setup_loop[0] + "}; _p.draw = function() {" + setup_loop[1] + "};"; 
             newP5(jsCode);
         }
         else if (bypassTranslation) {
