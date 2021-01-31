@@ -1,103 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8"/>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code - Myotics</title>
-    <link rel="icon" type="image/png" href="fav.png"/>
+    <link rel="icon" type="image/png" href="assets/fav.png" />
     <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
-    <script src="sketch.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.13.5/beautify.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
-    <link rel="stylesheet" href="style.css">
-    
-    <script src="index.js"></script>
+    <link rel="stylesheet" href="assets/style.css">
+
+    <script src="assets/index.js"></script>
+    <script src="assets/myo-code.js"></script>
 
 
-  </head>
-  <body>
+</head>
+
+<body>
     <main>
         <div class="main-section">
-            
+
             <div id="right-section">
                 <div id="container" class="example-container">
                 </div>
             </div>
 
-            <div id="left-section"> 
+            <div id="left-section">
                 <!-- Title -->
-                <image id="logo" src="myoLogoBlur.svg" height="80px">
-                <!-- Menu content -->
-                <div class="tab">
-                    <button id="start-btn" class="tablinks" onclick="openTab(event, 'Start')">START</button>
-                    <button id="create-btn" class="tablinks" onclick="openTab(event, 'Create')">CREATE</button>
-                    <button id="learn-btn"class="tablinks" onclick="openTab(event, 'Learn')">LEARN</button>
-                    <button id="about-btn"class="tablinks" onclick="openTab(event, 'About')">ABOUT</button>
-                </div>
-                <!-- Tab content -->
-                <div id="Start" class="tabcontent">
-                    <h2>Welcome!</h2>
-                    <p>
-                        
-                    </p>
-                    <h2>How does it work?</h2>
-                    <p>
-                        Just type your code in whatever language you may prefer. Look through the<a href="javascript:document.getElementById('learn-btn').click();">LEARN</a> tab to see available instructions that I can understand.
-                    </p>
-                    <h2>Let's begin!</h2>
-                    <p>
-                        Go to the<a href="javascript:document.getElementById('create-btn').click();">CREATE</a>tab to begin your coding journey!
-                    </p>
-
-                </div>
-                
-                <div id="Create" class="tabcontent">
-                    <div class="cntrl">
-                        <button id="play">► Run</button>
-                        <button id="stop">◼ Stop</button>
+                <a href="https://myotics.com">
+                    <image id="logo" src="assets/myoLogoBlur.svg" height="80px">
+                </a>
+                    <!-- Menu content -->
+                    <div class="tab">
+                        <button id="start-btn" class="tablinks" onclick="openTab(event, 'Start')">START</button>
+                        <button id="create-btn" class="tablinks" onclick="openTab(event, 'Create')">CREATE</button>
+                        <button id="learn-btn" class="tablinks" onclick="openTab(event, 'Learn')">LEARN</button>
+                        <button id="about-btn" class="tablinks" onclick="openTab(event, 'About')">ABOUT</button>
                     </div>
-                    <div class="scrl">
-                        <div class="setup">
-                            <h3>When I first start ...</h3>
-                            <!--
+                    <!-- Tab content -->
+                    <div id="Start" class="tabcontent">
+                        <h2>Welcome!</h2>
+                        <p>
+
+                        </p>
+                        <h2>How does it work?</h2>
+                        <p>
+                            Just type your code in whatever language you may prefer. Look through the<a
+                                href="javascript:document.getElementById('learn-btn').click();">LEARN</a> tab to see
+                            available instructions that I can understand.
+                        </p>
+                        <h2>Let's begin!</h2>
+                        <p>
+                            Go to the<a href="javascript:document.getElementById('create-btn').click();">CREATE</a>tab
+                            to begin your coding journey!
+                        </p>
+
+                    </div>
+
+                    <div id="Create" class="tabcontent">
+                        <div class="cntrl">
+                            <button id="play">► Run</button>
+                            <button id="stop">◼ Stop</button>
+                            <button id="language">⬤ Change Language</button>
+                        </div>
+                        <div class="scrl">
+                            <div class="setup">
+                                <h3>When I first start ...</h3>
+                                <!--
                             <span class="textarea setup" id="prgm-setup" role="textbox" contenteditable ></span>
                             <span class="textarea loop" id="prgm-loop" role="textbox" contenteditable></span> -->
-                            <textarea class="textarea setup" id="prgm-setup" placeholder="Write some code..."></textarea>
-                        </div>
-                        <br>
-                        <div class="loop">
-                            <h3>I will do this forever ...</h3>
-                            <textarea class="textarea loop" id="prgm-loop" placeholder="Write some code..."></textarea>
+                                <textarea class="textarea setup" id="prgm-setup"
+                                    placeholder="Write some code..."></textarea>
+                            </div>
+                            <br>
+                            <div class="loop">
+                                <h3>I will do this forever ...</h3>
+                                <textarea class="textarea loop" id="prgm-loop"
+                                    placeholder="Write some code..."></textarea>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div id="Learn" class="tabcontent">
-                    <!--
+                    <div id="Learn" class="tabcontent">
+                        <!--
                     <iframe src="https://p5js.org/get-started/" title="The Underside of Myotics" width="100%" frameborder="0" onload="resizeIframe(this)" ></iframe> 
                     -->
-                    <h2>We've Made This Thanks To The Hard Works of P5.js</h2>
-                    <p>
-                        Check out their website for documentation and how to code.
-                    </p>
-                    
-                    <form action="https://p5js.org/" target="_blank">
-                        <button type="submit">Documentation</button>
-                    </form>
-                    
-                </div>
+                        <h2>We've Made This Thanks To The Hard Works of P5.js</h2>
+                        <p>
+                            Check out their website for documentation and how to code.
+                        </p>
 
-                <div id="About" class="tabcontent">
-                    <h2>What Keeps Us Motivated</h2>
-                    <p>
-                        We originally began as a team of undergraduate students at Ryerson University in Toronto, Canada. Having worked on design projects and capstone during our studies, we began realizing the need and importance of technology in and how it is rapidly changing the jobs of the future. For this reason, we founded Myotics which aims to be a world-provider for educational toys that enable kids to familiarize themselves with modern technology at a young age. With the help of you and those alike, we hope to make a difference in the living standards of generations to come.
-                    </p>
-                </div>
+                        <form action="https://p5js.org/" target="_blank">
+                            <button type="submit">Documentation</button>
+                        </form>
+
+                    </div>
+
+                    <div id="About" class="tabcontent">
+                        <h2>What Keeps Us Motivated</h2>
+                        <p>
+                            We originally began as a team of undergraduate students at Ryerson University in Toronto,
+                            Canada. Having worked on design projects and capstone during our studies, we began realizing
+                            the need and importance of technology in and how it is rapidly changing the jobs of the
+                            future. For this reason, we founded Myotics which aims to be a world-provider for
+                            educational toys that enable kids to familiarize themselves with modern technology at a
+                            young age. With the help of you and those alike, we hope to make a difference in the living
+                            standards of generations to come.
+                        </p>
+                    </div>
 
 
             </div>
-            
+
         </div>
 
     </main>
-  </body>
+</body>
+
 </html>
