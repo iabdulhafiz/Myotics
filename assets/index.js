@@ -3,7 +3,7 @@ const api = "https://myocode.cognitiveservices.azure.com/luis/prediction/v3.0/ap
 const transAPI = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=en"
 
 var myp5;
-var bypassTranslation = false;
+var bypassTranslation = true;
 let bypassLUIS = false;
 
 var p5x = 0;

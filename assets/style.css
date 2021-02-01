@@ -190,3 +190,17 @@ a {
     grid-row: 2;
   }
 }
+
+#Learn ul{
+  padding-left: 50px;
+  list-style-type: square;
+  color:rgb(50, 0, 143);
+}
+
+#Learn ul ul{
+  padding-left: 0px;
+  list-style-type: none;
+  font-weight: bold;
+  padding-top: 0px;
+  color:rgb(153, 0, 153);
+}
