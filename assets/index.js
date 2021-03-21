@@ -2,6 +2,7 @@
 const api = "https://myocode.cognitiveservices.azure.com/luis/prediction/v3.0/apps/a2f6ec48-3d5e-495e-bd73-b3d42335010e/slots/staging/predict?subscription-key=64b7b41244ff40bc8bd999c63f7bb41c&verbose=true&show-all-intents=true&log=true&query="
 const transAPI = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=en"
 
+
 var myp5;
 var bypassTranslation = true;
 let bypassLUIS = false;
@@ -121,6 +122,30 @@ function convertToCode(lines) {
     });
 }
 
+function signIn() {
+    axios.get("https://myocode.azurewebsites.net/.auth/me")
+    .then((response) => {
+        if (response != null) {
+            console.log(response);
+            alert(response[0]['user_id'])
+        }
+        else {
+
+        }
+    }, (error) => {
+        alert("There was an error logging in.")
+    })
+}
+
+function getCodeResponse(raw_code) {
+    const dat = "[{'age':'" + 23 + "'}]";
+    axios.post("https://localhost:7071/api/HttpExample", dat)
+    .then((response) => {
+        console.log(response);
+    }, (error) => {
+        alert("There was an error translating to code.")
+    })
+}
 
 var ready = (callback) => {
     if (document.readyState != "loading") callback();
@@ -128,7 +153,14 @@ var ready = (callback) => {
 }
 
 ready(() => {
-    document.getElementById("start-btn").click();
+
+    if (window.location.hash == '#create') {
+        document.getElementById("create-btn").click();
+    }
+    else {
+        document.getElementById("start-btn").click();
+    }
+    
 
     // For text area
     const tx = document.getElementsByTagName('textarea');
@@ -214,6 +246,11 @@ ready(() => {
     document.querySelector("#language").addEventListener("click", (e) => {
         bypassTranslation = false;
     });
+
+
+    
+    
+
 });
 
 

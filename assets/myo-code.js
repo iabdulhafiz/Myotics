@@ -1,3 +1,230 @@
+var myp5;
+const api = "https://myocode.cognitiveservices.azure.com/luis/prediction/v3.0/apps/a2f6ec48-3d5e-495e-bd73-b3d42335010e/slots/staging/predict?subscription-key=64b7b41244ff40bc8bd999c63f7bb41c&verbose=true&show-all-intents=true&log=true&query="
+    
+
+var p5x = 0;
+var p5y = 0;
+
+function getDim(mode) {
+    let x = document.getElementById('right-section');
+    p5x = x.clientWidth - 3;
+    p5y = x.clientHeight - 3;
+    //return ("\n_p."+mode+"Canvas("+(x.clientWidth-3)+","+(x.clientHeight-3)+");\n");
+    return ("_p." + mode + "Canvas(p5x, p5y);\n");
+}
+
+function directLuis(newLines) {
+    newLines = newLines.filter(item => item);
+
+    num = newLines.length;
+    console.log(newLines);
+
+    let results = [];
+    let newLinesTRANS = [];
+    
+    //let results = new Array(num);
+    let promises = [];
+    let promises2 = [];
+    for (var i = 0; i < num; i++) {
+        //code here using lines[i] which will give you each line
+        if (newLines[i].includes("[") && newLines[i].includes("]")) {
+            results.push(newLines[i]);
+            //newLinesTRANS.push(newLines[i]);
+        } else {
+            var temp = localStorage.getItem(newLines[i]);
+            if (temp === null) {
+                alert("No");
+                const data = "[{'Text':'" + newLines[i] + "'}]";
+                promises.push(
+                    axios.post(TRANS_API, data, {headers: TRANS_HEADER}).then((response) => {
+                        //console.log(response);
+                        //results.push(response);
+                        //results.splice(i, 0, response);
+                        var line = response.data[0].translations[0].text;
+                        newLinesTRANS.push(response);
+                        //localStorage.setItem(newLines[i], line);
+
+                        console.log(response);
+
+                        promises2.push(
+                            axios.get(DIRECT_API_LUIS + line).then((response) => {
+                                //console.log(response);
+                                results.push(response);
+                                //results.splice(i, 0, response);
+                            }, (error) => {
+                                alert(error);
+                            })
+                        )
+
+                    }, (error) => {
+                        alert(error);
+                    })
+                    
+                )
+            }
+            else {
+                results.push(JSON.parse(temp));
+            }
+        }
+
+    }
+    
+    let jsCode = "";
+    Promise.all(promises).then(() => {
+        Promise.all(promises2).then(() => {
+
+        console.log(results);
+        let q = null;
+        jsCode = "_p.setup = function() {" + getDim('create')
+        jsCode += "try {"
+        console.log(results);
+
+        for (var i = 0; i < num; i++) {
+            
+            for (var j = 0; j < results.length; j++) {
+                if (typeof results[j] === 'string' || results[j] instanceof String) {
+                    if (results[j] == newLines[i]) {
+                        q = results[j];
+                    }
+                }
+                else if (results[j].data.query == newLines[i]) {
+                    localStorage.setItem(newLines[i], JSON.stringify(results[j])); 
+                    
+                    //alert(localStorage.getItem(newLines[i]))
+                    q = results[j].data;
+                    break;
+                }
+                else {
+                    for (var k = 0; k < newLinesTRANS.length; k++) {
+                        console.log(k);
+                        console.log(newLinesTRANS[k].data[0].translations[0].text);
+                        console.log(results[j]);
+                        console.log(newLinesTRANS[k].config.data.slice(10,-3));
+                        console.log(newLines[i]);
+                        if (results[j].data.query == newLinesTRANS[k].data[0].translations[0].text && newLinesTRANS[k].config.data.slice(10,-3) == newLines[i]) {
+                            localStorage.setItem(newLines[i], JSON.stringify(results[j])); 
+                            q = results[j].data;
+                        }
+                    }
+                }
+            }
+            jsCode += processJSON(q);
+        }
+        jsCode += "} catch(err) { alert('Something went wrong when I was starting ...') };\n";
+        jsCode += "};";
+
+        /*
+        jsCode += " _p.draw = function() {\n"
+        jsCode += "try {"
+        for (var i = pos; i < num; i++) {
+            for (var j = 0; i < results.length; j++) {
+                if (typeof results[j] === 'string' || results[j] instanceof String) {
+                    if (results[j] == newLines[i]) {
+                        q = results[j];
+                    }
+                }
+                else if (results[j].data.query == newLines[i]) {
+                    q = results[j].data;
+                    break;
+                }
+            }
+            jsCode += processJSON(q);
+        }
+        jsCode += "} catch(err) { alert('Something went wrong when I was looping ...'); _p.noLoop(); };\n";
+        jsCode += "};";
+        */
+        jsCode += "\n_p.windowResized = function() {\n\tgetDim('resize')\n" + getDim('resize') + "}\n";
+        // run the code
+
+        newP5(jsCode);
+        console.log(js_beautify(jsCode));
+
+        });
+    });
+}
+
+function newP5(code) {
+    let F = new Function('_p', code);
+
+    //return(F());
+    try {
+        myp5.remove();
+        let element = document.getElementById("container");
+        element.innerHTML = '';
+    } catch (err) {
+        myp5 = null;
+    } finally {
+        myp5 = new p5(F, 'container');
+    }
+
+}
+
+function convertToCode(lines) {
+    
+    dat = "{'code':'" + lines + "'}";
+    axios.post("https://localhost:7072/api/HttpExample", dat)
+            .then((response) => {
+                console.log(response);
+                
+            }, (error) => {
+                alert("There was an error translating from another language. The current default is set to English.")
+                
+            })
+
+    let jsCode = "";
+    /*
+    Promise.all(promises).then(() => {
+        let q = null;
+        jsCode = "_p.setup = function() {" + getDim('create')
+        jsCode += "try {"
+        console.log(results)
+        for (var i = 0; i < pos; i++) {
+            for (var j = 0; i < results.length; j++) {
+                if (typeof results[j] === 'string' || results[j] instanceof String) {
+                    if (results[j] == newLines[i]) {
+                        q = results[j];
+                    }
+                }
+                else if (results[j].data.query == newLines[i]) {
+                    q = results[j].data;
+                    break;
+                }
+            }
+            jsCode += processJSON(q);
+        }
+        jsCode += "} catch(err) { alert('Something went wrong when I was starting ...') };\n";
+        jsCode += "};";
+
+        jsCode += " _p.draw = function() {\n"
+        jsCode += "try {"
+        for (var i = pos; i < num; i++) {
+            for (var j = 0; i < results.length; j++) {
+                if (typeof results[j] === 'string' || results[j] instanceof String) {
+                    if (results[j] == newLines[i]) {
+                        q = results[j];
+                    }
+                }
+                else if (results[j].data.query == newLines[i]) {
+                    q = results[j].data;
+                    break;
+                }
+            }
+            jsCode += processJSON(q);
+        }
+        jsCode += "} catch(err) { alert('Something went wrong when I was looping ...'); _p.noLoop(); };\n";
+        jsCode += "};\n_p.windowResized = function() {\n\tgetDim('resize')\n" + getDim('resize') + "}\n";
+        // run the code
+
+        newP5(jsCode);
+        console.log(js_beautify(jsCode));
+        
+
+    });
+    */
+}
+
+
+
 function processJSON(jsn) {
     var conds = null;
     if (typeof jsn === 'string' || jsn instanceof String) {
